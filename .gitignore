@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 
 pdfs/
+jsons/
+hf_token

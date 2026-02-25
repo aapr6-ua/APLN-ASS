@@ -1,19 +1,18 @@
 import os
+import sys
 import json
 import time
 from huggingface_hub import InferenceClient
 
+# Our function to parse the BOE PDFs
 from extractor_pdf import extract_relevant_text
 
 # Hugging Face Configuration
-HF_TOKEN = ""
+HF_TOKEN = open("hf_token", "r").read().strip()
 MODELO_HF = "meta-llama/Meta-Llama-3-8B-Instruct"
 
+# Sends the filtered BOE text to Hugging Face Inference API and requests a formatted JSON output
 def generate_json_from_text(text, pdf_name):
-    """
-    Sends the filtered BOE text to Hugging Face Inference API
-    and requests an EXTENDED strictly formatted JSON output.
-    """
     print(f"Sending {pdf_name} data to Hugging Face ({MODELO_HF})...")
     start_time = time.time()
     
@@ -24,9 +23,10 @@ def generate_json_from_text(text, pdf_name):
     Eres un asistente experto en extraer datos legales. Tu ÚNICA tarea es leer el texto y devolver un JSON.
     NO escribas NADA MÁS, ni saludos, ni explicaciones. Solo el JSON puro.
     
-    Estructura OBLIGATORIA. Respeta los nombres de las claves. Si no encuentras un dato exacto en el texto, el valor DEBE ser null:
+    Estructura OBLIGATORIA. Respeta los nombres de las claves. Si no encuentras un dato exacto en el texto, el valor DEBE ser null.
+    Observa este ejemplo de la estructura JSON que debes seguir:
     {
-        "curso_academico": "ejemplo 2021-2022",
+        "curso_academico": "2021-2022",
         "cuantia_fija_renta": 1500,
         "cuantia_fija_residencia": 900,
         "cuantia_beca_basica": 100,
@@ -45,7 +45,6 @@ def generate_json_from_text(text, pdf_name):
         response = client.chat_completion(
             messages=[
                 {"role": "system", "content": system_prompt},
-                # Mensaje del usuario también en español
                 {"role": "user", "content": f"Extrae los datos de este texto del BOE:\n\n{text}"}
             ],
             max_tokens=1000,
@@ -66,9 +65,12 @@ def generate_json_from_text(text, pdf_name):
         print(f"Error during AI generation: {e}")
         return None
 
-# --- TESTING AREA ---
+
 if __name__ == "__main__":
-    test_pdf = "pdfs/ayudas_21-22.pdf"
+    if len(sys.argv) > 1:
+        test_pdf = sys.argv[1]
+    else:
+        test_pdf = "pdfs/ayudas_21-22.pdf"
     
     if os.path.exists(test_pdf):
         extracted_text = extract_relevant_text(test_pdf)
