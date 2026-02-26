@@ -48,7 +48,7 @@ def generate_json_from_text(text, pdf_name):
                 {"role": "user", "content": f"Extrae los datos de este texto del BOE:\n\n{text}"}
             ],
             max_tokens=1000,
-            temperature=0.1 
+            temperature=0.0
         )
         
         json_string = response.choices[0].message.content
@@ -57,7 +57,7 @@ def generate_json_from_text(text, pdf_name):
         data_dict = json.loads(json_string)
         
         execution_time = time.time() - start_time
-        print(f"AI processing successful in {execution_time:.2f} seconds.")
+        print(f"AI processing successful in {execution_time:.2f} seconds")
         
         return data_dict
 

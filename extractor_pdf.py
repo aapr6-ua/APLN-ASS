@@ -46,8 +46,8 @@ def extract_relevant_text(pdf_path):
         relevant_text = ".\n\n".join(relevant_sentences)
         
         execution_time = time.time() - start_time
-        print(f"Success. Extracted {len(relevant_text)} characters (Sniper Mode).")
-        print(f"Execution time: {execution_time:.2f} seconds.")
+        print(f"Success. Extracted {len(relevant_text)} characters")
+        print(f"Execution time: {execution_time:.2f} seconds")
         return relevant_text
 
     except Exception as e:
