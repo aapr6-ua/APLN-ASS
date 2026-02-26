@@ -23,21 +23,28 @@ def generate_json_from_text(text, pdf_name):
     Eres un asistente experto en extraer datos legales. Tu ÚNICA tarea es leer el texto y devolver un JSON.
     NO escribas NADA MÁS, ni saludos, ni explicaciones. Solo el JSON puro.
     
-    Estructura OBLIGATORIA. Respeta los nombres de las claves. Si no encuentras un dato exacto en el texto, el valor DEBE ser null.
-    Observa este ejemplo de la estructura JSON que debes seguir:
+    INSTRUCCIONES CRÍTICAS:
+    1. Si no encuentras un dato exacto en el texto, el valor DEBE ser null. ¡NO te inventes datos ni copies los ejemplos!
+    2. El presupuesto total debe estar SIEMPRE en euros absolutos (ejemplo: si el texto dice "2.038,13 millones", debes escribir 2038130000. Si no lo encuentras, null).
+    
+    Estructura OBLIGATORIA a rellenar:
     {
-        "curso_academico": "2021-2022",
-        "cuantia_fija_renta": 1500,
-        "cuantia_fija_residencia": 900,
-        "cuantia_beca_basica": 100,
-        "cuantia_variable_minima": 40,
-        "cuantia_excelencia_maxima": 110,
-        "nota_minima_universidad_grado": 4.0,
-        "umbral_1_un_miembro": 847,
-        "umbral_2_un_miembro": 13346,
-        "umbral_3_un_miembro": 14888,
-        "plazo_solicitud_universitarios": "16 de septiembre de 2021",
-        "plazo_solicitud_no_universitarios": null
+        "curso_academico": null,
+        "presupuesto_total_becas": null, 
+        "cuantia_fija_renta": null,
+        "cuantia_fija_residencia": null,
+        "beca_basica": null,
+        "cuantia_variable_minima": null,
+        "cuantia_excelencia_minima": null,
+        "cuantia_excelencia_maxima": null,
+        "nota_minima_universidad_grado": null,
+        "plazo_solicitud_universitarios": null,
+        "plazo_solicitud_no_universitarios": null,
+        "umbral_1_un_miembro": null,
+        "umbral_2_un_miembro": null,
+        "umbral_3_un_miembro": null,
+        "umbral_patrimonio_fincas_urbanas": null,
+        "cuantia_adicional_insular": null
     }
     """
 

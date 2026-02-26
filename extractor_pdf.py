@@ -6,7 +6,7 @@ import re
 
 # Reads the PDF and extracts all text, splits it and applies double-matching rules to only keep factual sentences
 def extract_relevant_text(pdf_path):
-    print(f"Processing document: {pdf_path}...")
+    print(f"Processing document: {pdf_path}")
     start_time = time.time()
     relevant_sentences = []
     
@@ -23,22 +23,27 @@ def extract_relevant_text(pdf_path):
         
         for sentence in sentences:
             sentence_lower = sentence.lower()
+            meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
             
-            # RULE 1: Financial amounts
-            if ("cuantía" in sentence_lower or "umbral" in sentence_lower) and ("euros" in sentence_lower or "€" in sentence_lower):
+            # RULE 1: Financial amounts, budgets and thresholds (Renta, patrimonio, presupuestos)
+            if ("cuantía" in sentence_lower or "umbral" in sentence_lower or "presupuesto" in sentence_lower or "patrimonio" in sentence_lower or "fincas urbanas" in sentence_lower) and \
+               ("euros" in sentence_lower or "millones" in sentence_lower or "€" in sentence_lower):
                 relevant_sentences.append(sentence.strip())
                 
             # RULE 2: Deadlines
-            elif ("plazo" in sentence_lower or "solicitudes" in sentence_lower) and \
-                 ("octubre" in sentence_lower or "septiembre" in sentence_lower or "mayo" in sentence_lower or "diciembre" in sentence_lower):
+            elif ("plazo" in sentence_lower or "solicitud" in sentence_lower) and any(mes in sentence_lower for mes in meses):
                 relevant_sentences.append(sentence.strip())
                 
             # RULE 3: Academic grades
             elif "nota" in sentence_lower and "puntos" in sentence_lower:
                 relevant_sentences.append(sentence.strip())
                 
-            # RULE 4: Academic year
+            # RULE 4: Academic year 
             elif "curso académico 20" in sentence_lower:
+                relevant_sentences.append(sentence.strip())
+                
+            # RULE 5: Insular/Territorial bonuses 
+            elif "insular" in sentence_lower or "canarias" in sentence_lower or "baleares" in sentence_lower or "ceuta" in sentence_lower or "melilla" in sentence_lower:
                 relevant_sentences.append(sentence.strip())
                 
         # Remove duplicates and join
