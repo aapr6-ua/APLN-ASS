@@ -28,10 +28,9 @@ def generate_summary_from_json(data, json_name):
     
     ESTRUCTURA OBLIGATORIA DEL RESUMEN:
     1. Título principal (ej. ## Resumen de Becas MEC Curso 202X-202X).
-    2. Enseñanzas a las que aplica: enuméralas de forma natural.
-    3. Presupuesto y Plazos: incluye el dinero total destinado y las fechas límite (diferenciando universitarios de no universitarios si aplica).
-    4. Cuantías de la Beca: detalla el dinero (renta, residencia, excelencia, básica, variable y bonus insular).
-    5. Requisitos: nota mínima y umbrales económicos (renta y patrimonio).
+    2. Presupuesto y Plazos: incluye el dinero total destinado y las fechas límite (diferenciando universitarios de no universitarios si aplica).
+    3. Cuantías de la Beca: detalla el dinero (renta, residencia, excelencia, básica, variable y bonus insular).
+    4. Requisitos: nota mínima y umbrales económicos (renta y patrimonio).
     
     NORMAS DE FORMATO IMPORTANTES:
     - Si ves que algún dato es 'null', simplemente indica de forma natural que la convocatoria no lo especifica.
